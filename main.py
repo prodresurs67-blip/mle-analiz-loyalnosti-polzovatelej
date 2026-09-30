@@ -29,15 +29,18 @@ ORDER BY user_id ASC;
 '''
 def main():
     afisha = DataProcessor()
-
     df = afisha.load_data(query)
     df_currency = afisha.currency_load()
     df = afisha.data_preparation(df, df_currency)
     users_profile = afisha.users_profile_creation(df)
-    afisha.retention_count(users_profile)
-    afisha.correlation_analysis(users_profile)
+    share_of_returning_users, events, top_regions, device_of_1_order = afisha.retention_count(users_profile)
+    correlation_matrix, correlation_matrix_segments = afisha.correlation_analysis(users_profile)
+    afisha.final_report(users_profile,
+                        share_of_returning_users,
+                        top_regions,
+                        device_of_1_order,
+                        correlation_matrix,
+                        correlation_matrix_segments)
 
 if __name__ == "__main__":
     main()
-
-
